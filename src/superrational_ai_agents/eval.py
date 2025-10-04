@@ -24,5 +24,9 @@ models: list[Model] = [
     ]
 ]
 
-for model in models:
-    eval(tasks=play_game(model), limit=1)
+# for model in models:
+#     eval(tasks=play_game(model), limit=1)
+#     break # debug first
+
+# debug first
+eval(tasks=play_game(get_model("openai/gpt-5"), num_epochs=10), max_connections=200)

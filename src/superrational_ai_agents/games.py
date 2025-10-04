@@ -2,6 +2,10 @@ from enum import Enum
 
 # --- Game Texts (neutral, strategy-free, with numeric payoffs) ---
 
+PREFIX = """
+You are playing a game.
+"""
+
 PRISONER_DILEMMA = """
 - There are 2 players.
 - Each player must choose between Cooperate (C) or Defect (D).
@@ -55,6 +59,14 @@ where WORD is either SEND or NOTSEND.
 Answer in a new line without quotes.
 """
 
+PLATONIA_DILEMMA_INSTRUCTION_WITH_CPU_TIME = """
+Your goal is to maximize your chance of winning the prize. Output your answer as 'ANSWER: WORD'
+where WORD is either SEND or NOTSEND.
+Answer in a new line without quotes.
+
+Current CPU Time: 1695738123456789
+"""
+
 WOLF_DILEMMA = """
 - There are N players.
 - Each player has a button and may choose to push or refrain.
@@ -96,6 +108,7 @@ class GameType(Enum):
     PRISONER_DILEMMA = "prisoner_dilemma"
     N_PLAYER_PRISONER_DILEMMA = "n_player_prisoner_dilemma"
     PLATONIA_DILEMMA = "platonia_dilemma"
+    PLATONIA_DILEMMA_WITH_PROVIDED_RANDOMNESS = "platonia_dilemma_with_provided_randomness"
     WOLF_DILEMMA = "wolf_dilemma"
     MODIFIED_WOLF_DILEMMA = "modified_wolf_dilemma"
 
@@ -103,6 +116,7 @@ GAMES = {
     GameType.PRISONER_DILEMMA: PRISONER_DILEMMA,
     GameType.N_PLAYER_PRISONER_DILEMMA: N_PLAYER_PRISONER_DILEMMA,
     GameType.PLATONIA_DILEMMA: PLATONIA_DILEMMA,
+    GameType.PLATONIA_DILEMMA_WITH_PROVIDED_RANDOMNESS: PLATONIA_DILEMMA,
     GameType.WOLF_DILEMMA: WOLF_DILEMMA,
     GameType.MODIFIED_WOLF_DILEMMA: MODIFIED_WOLF_DILEMMA,
 }
@@ -111,6 +125,7 @@ INSTRUCTIONS = {
     GameType.PRISONER_DILEMMA: PRISONER_DILEMMA_INSTRUCTION,
     GameType.N_PLAYER_PRISONER_DILEMMA: N_PLAYER_PRISONER_DILEMMA_INSTRUCTION,
     GameType.PLATONIA_DILEMMA: PLATONIA_DILEMMA_INSTRUCTION,
+    GameType.PLATONIA_DILEMMA_WITH_PROVIDED_RANDOMNESS: PLATONIA_DILEMMA_INSTRUCTION_WITH_CPU_TIME,
     GameType.WOLF_DILEMMA: WOLF_DILEMMA_INSTRUCTION,
     GameType.MODIFIED_WOLF_DILEMMA: MODIFIED_WOLF_DILEMMA_INSTRUCTION,
 }

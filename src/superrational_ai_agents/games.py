@@ -55,13 +55,13 @@ PLATONIA_DILEMMA = """
 
 PLATONIA_DILEMMA_INSTRUCTION = """
 Your goal is to maximize your chance of winning the prize. Output your answer as 'ANSWER: WORD'
-where WORD is either SEND or NOTSEND.
+where WORD is either SEND or NOTSEND. Include a brief explanation before your answer.
 Answer in a new line without quotes.
 """
 
 PLATONIA_DILEMMA_INSTRUCTION_WITH_CPU_TIME = """
 Your goal is to maximize your chance of winning the prize. Output your answer as 'ANSWER: WORD'
-where WORD is either SEND or NOTSEND.
+where WORD is either SEND or NOTSEND. Include a brief explanation before your answer.
 Answer in a new line without quotes.
 
 Current CPU Time: 1695738123456789

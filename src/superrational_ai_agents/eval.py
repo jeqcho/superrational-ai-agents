@@ -29,4 +29,4 @@ models: list[Model] = [
 #     break # debug first
 
 # debug first
-eval(tasks=play_game(get_model("openai/gpt-5"), num_epochs=10), max_connections=200)
+eval(tasks=play_game(get_model("openai/gpt-5-mini"), num_epochs=10), max_connections=200)

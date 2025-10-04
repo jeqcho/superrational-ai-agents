@@ -69,19 +69,45 @@ The framework is configured to test:
 
 ## Usage
 
+### Running Evaluations
+
 Run the evaluation:
 
 ```bash
 uv run src/superrational_ai_agents/eval.py
 ```
 
+Results are saved as `.eval` files in the `logs/` directory.
+
+### Analyzing Results
+
+Analyze a single evaluation log file and generate a CSV summary:
+
+```bash
+# Analyze a log file
+uv run python src/analysis/analyze_logs.py logs/your_log_file.eval output.csv
+```
+
+The CSV output includes:
+- `game_key`: Which game was played
+- `player_variant`: Type of other players (same model, similarly rational, or other agents)
+- `move_order_variant`: Move order (default, others moved first, or you first)
+- `prop_superrational`: Proportion of superrational answers (where answer matches target)
+- `prop_send`: Proportion of "SEND" responses (Platonia dilemma only)
+- `n_samples`: Number of samples in each group
+
+Results are automatically sorted by game_key, player_variant, and move_order_variant.
+
 ## Project Structure
 
 ```
-src/superrational_ai_agents/
-├── eval.py         # Main evaluation runner
-├── task.py         # Inspect AI task and scorer definitions
-└── games.py        # Game scenarios and variant definitions
+src/
+├── superrational_ai_agents/
+│   ├── eval.py         # Main evaluation runner
+│   ├── task.py         # Inspect AI task and scorer definitions
+│   └── games.py        # Game scenarios and variant definitions
+└── analysis/
+    └── analyze_logs.py # Log analysis and CSV generation
 ```
 
 ## Expected Superrational Answers

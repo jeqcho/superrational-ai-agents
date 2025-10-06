@@ -53,8 +53,8 @@ def create_grouped_bar_plot(
     # Prepare data for plotting
     x_labels = [
         "Instances of the same\nmodel as yourself",
-        "Similarly rational\nAI agents like yourself",
-        "Similar AI agents\nlike yourself",
+        "Similarly rational\nAI agents",
+        "Similar AI agents",
         "Other rational\nhumans",
         "Other humans",
     ]

@@ -129,6 +129,22 @@ Heatmaps are saved to the output directory with one PNG file per game. Each heat
 - Values: Average superrational score across all move order variants
 - Colormap: Viridis (0-1 scale) with numerical annotations
 
+#### Model Comparison Bar Charts
+
+Generate grouped bar charts comparing models across player variants:
+
+```bash
+# Generate model comparison plots from all logs in a directory
+uv run python src/analysis/plot_model_comparison.py public_logs/
+uv run python src/analysis/plot_model_comparison.py public_logs/ model_comparison_plots/
+```
+
+Plots are saved to the output directory with one PNG file per game. Each plot shows:
+- X-axis groups: Player variants (5 groups)
+- Bars within each group: Different models (colored by model)
+- Y-axis: Mean superrational score (averaged across move order variants)
+- One plot per game type
+
 ## Project Structure
 
 ```
@@ -139,9 +155,10 @@ src/
 │   ├── games.py        # Game scenarios and variant definitions
 │   └── _registry.py    # Inspect AI task registry
 └── analysis/
-    ├── analyze_logs.py # Log analysis and CSV generation
-    ├── plot_results.py # Grouped bar plot generation
-    └── plot_heatmap.py # Heatmap generation for model comparison
+    ├── analyze_logs.py         # Log analysis and CSV generation
+    ├── plot_results.py         # Grouped bar plot generation
+    ├── plot_heatmap.py         # Heatmap generation for model comparison
+    └── plot_model_comparison.py # Model comparison bar charts
 ```
 
 ## Expected Superrational Answers

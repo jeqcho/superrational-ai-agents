@@ -1,10 +1,9 @@
-"""Generate heatmaps for superrationality scores across models and player variants."""
+"""Generate grouped bar plots comparing models across player variants."""
 
 import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
 from typing import Any
-import seaborn as sns
 
 from analyze_logs import analyze_log_file, aggregate_results
 from superrational_ai_agents.games import GameType, PlayersVariant
@@ -21,10 +20,10 @@ def extract_model_name(log_filename: str) -> str:
     return stem
 
 
-def create_heatmap_for_game(
+def create_model_comparison_plot(
     all_data: dict[str, list[dict[str, Any]]], game_key: str, output_path: Path
 ) -> None:
-    """Create a heatmap for a specific game across all models."""
+    """Create a grouped bar plot comparing models for a specific game."""
 
     # Define player variant ordering
     player_variants = [
@@ -43,7 +42,6 @@ def create_heatmap_for_game(
         "Other humans",
     ]
 
-    # Collect data for heatmap
     # Define custom model ordering (exact names from log filenames)
     model_order = [
         "gpt-5",
@@ -53,7 +51,6 @@ def create_heatmap_for_game(
         "claude-3.7-sonnet",
         "gemini-2.5-pro",
         "gemini-2.5-flash-lite",
-        "qwen-2.5-7b-instruct",
     ]
 
     # Get all available models and order them
@@ -70,11 +67,10 @@ def create_heatmap_for_game(
         if model not in models:
             models.append(model)
 
-    # Create matrix: rows = models, cols = player variants
-    matrix = []
-
+    # Collect data: data_matrix[model][player_variant] = mean_score
+    data_matrix = {}
     for model_name in models:
-        row = []
+        data_matrix[model_name] = {}
         for pv in player_variants:
             # Find the aggregated score for this game, model, and player variant
             # Average across all move order variants
@@ -85,51 +81,57 @@ def create_heatmap_for_game(
 
             if game_data:
                 avg_score = np.mean([d["prop_superrational"] for d in game_data])
-                row.append(avg_score)
+                data_matrix[model_name][pv] = avg_score
             else:
-                row.append(np.nan)
+                data_matrix[model_name][pv] = np.nan
 
-        matrix.append(row)
+    # Set up the bar positions
+    x = np.arange(len(player_variants))
+    n_models = len(models)
+    width = 0.8 / n_models  # Total width is 0.8 to leave space between groups
 
-    matrix = np.array(matrix)
+    fig, ax = plt.subplots(figsize=(14, 7))
 
-    # Create the heatmap
-    fig, ax = plt.subplots(figsize=(10, max(6, len(models) * 0.5)))
+    # Plot bars for each model
+    for i, model_name in enumerate(models):
+        values = [data_matrix[model_name][pv] for pv in player_variants]
+        offset = width * (i - n_models/2 + 0.5)
+        ax.bar(x + offset, values, width, label=model_name)
 
-    # Use seaborn for nicer heatmap
-    sns.heatmap(
-        matrix,
-        annot=True,
-        fmt='.2f',
-        cmap='viridis',
-        vmin=0,
-        vmax=1,
-        cbar_kws={'label': 'Proportion Superrational'},
-        xticklabels=player_variant_labels,
-        yticklabels=models,
-        ax=ax,
-    )
+    # Customize the plot
+    # Set y-axis label based on game type
+    ylabel_map = {
+        GameType.PRISONER_DILEMMA.value: "Superrational Score\n(Proportion Choosing Cooperate)",
+        GameType.N_PLAYER_PRISONER_DILEMMA.value: "Superrational Score\n(Proportion Choosing Cooperate)",
+        GameType.PLATONIA_DILEMMA.value: "Superrational Score\n(Proportion Using Randomization)",
+        GameType.PLATONIA_DILEMMA_WITH_PROVIDED_RANDOMNESS.value: "Superrational Score\n(Proportion Using Randomization)",
+        GameType.WOLF_DILEMMA.value: "Superrational Score\n(Proportion Choosing Refrain)",
+        GameType.MODIFIED_WOLF_DILEMMA.value: "Superrational Score\n(Proportion Choosing Refrain)",
+    }
+    ylabel = ylabel_map.get(game_key, "Proportion Superrational")
 
     ax.set_xlabel("Other players are said to be...", fontsize=12)
-    ax.set_ylabel("Model", fontsize=12)
+    ax.set_ylabel(ylabel, fontsize=12)
     ax.set_title(
-        f"Superrationality Heatmap: {game_key.replace('_', ' ').title()}",
+        f"Model Comparison: {game_key.replace('_', ' ').title()}",
         fontsize=14,
         pad=20
     )
+    ax.set_xticks(x)
+    ax.set_xticklabels(player_variant_labels, fontsize=10)
+    ax.legend(title="Model", loc="best", fontsize=9)
+    ax.set_ylim(0, 1.0)
+    ax.grid(axis="y", alpha=0.3)
 
-    # Rotate x-axis labels for better readability
-    plt.setp(ax.get_xticklabels(), rotation=0, ha='center', fontsize=9)
-    plt.setp(ax.get_yticklabels(), rotation=0, fontsize=9)
-
+    # Save the plot
     plt.tight_layout()
-    plt.savefig(output_path, dpi=300, bbox_inches='tight')
+    plt.savefig(output_path, dpi=300, bbox_inches="tight")
     plt.close()
-    print(f"Saved heatmap: {output_path}")
+    print(f"Saved plot: {output_path}")
 
 
-def plot_heatmaps(log_dir: Path, output_dir: Path) -> None:
-    """Generate heatmaps for all games from all log files."""
+def plot_model_comparisons(log_dir: Path, output_dir: Path) -> None:
+    """Generate model comparison plots for all games from all log files."""
     log_dir = Path(log_dir)
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -158,29 +160,34 @@ def plot_heatmaps(log_dir: Path, output_dir: Path) -> None:
 
     games = sorted(all_games)
 
-    # Create a heatmap for each game
+    # Create a plot for each game
     for game_key in games:
-        output_path = output_dir / f"{game_key}_heatmap.png"
-        create_heatmap_for_game(all_data, game_key, output_path)
+        output_path = output_dir / f"{game_key}_model_comparison.png"
+        create_model_comparison_plot(all_data, game_key, output_path)
 
-    print(f"\nGenerated {len(games)} heatmaps in {output_dir}")
+    print(f"\nGenerated {len(games)} model comparison plots in {output_dir}")
 
 
 if __name__ == "__main__":
     import sys
 
     if len(sys.argv) < 2:
-        print("Usage: python plot_heatmap.py <log_directory> [output_directory]")
+        print("Usage: python plot_model_comparison.py <log_directory> [output_directory]")
         print("\nExample:")
-        print("  python plot_heatmap.py public_logs/")
-        print("  python plot_heatmap.py public_logs/ heatmaps/")
+        print("  python plot_model_comparison.py public_logs/")
+        print("  python plot_model_comparison.py public_logs/ model_comparison_plots/")
         sys.exit(1)
 
     log_dir = Path(sys.argv[1])
-    output_dir = Path(sys.argv[2]) if len(sys.argv) > 2 else Path("heatmaps")
+
+    if len(sys.argv) > 2:
+        output_dir = Path(sys.argv[2])
+    else:
+        # Default: model_comparison_plots/<log_dir_path>
+        output_dir = Path("model_comparison_plots") / log_dir
 
     if not log_dir.is_dir():
         print(f"Error: {log_dir} is not a valid directory")
         sys.exit(1)
 
-    plot_heatmaps(log_dir, output_dir)
+    plot_model_comparisons(log_dir, output_dir)

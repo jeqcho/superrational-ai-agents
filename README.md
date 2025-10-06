@@ -100,7 +100,9 @@ Results are automatically sorted by game_key, player_variant, and move_order_var
 
 ### Visualizing Results
 
-Generate grouped bar plots for each game:
+#### Grouped Bar Plots
+
+Generate grouped bar plots for each game from a single log file:
 
 ```bash
 # Generate plots from a log file
@@ -108,9 +110,24 @@ uv run python src/analysis/plot_results.py logs/your_log_file.eval
 ```
 
 Plots are saved to `plots/<log_filename>/` with one PNG file per game. Each plot shows:
-- X-axis: Player variant (instances of same model, similarly rational AI agents, similar AI agents)
-- Y-axis: Proportion of superrational answers
+- X-axis: Player variant (instances of same model, similarly rational AI agents, similar AI agents, other rational humans, other humans)
+- Y-axis: Proportion of superrational answers (with game-specific labels)
 - Grouped bars: Different move order variants (simultaneous, others first, you first)
+
+#### Heatmaps
+
+Generate heatmaps comparing all models across player variants:
+
+```bash
+# Generate heatmaps from all logs in a directory
+uv run python src/analysis/plot_heatmap.py public_logs/ heatmaps/
+```
+
+Heatmaps are saved to the output directory with one PNG file per game. Each heatmap shows:
+- Rows: Different models (extracted from log filenames)
+- Columns: Player variants (5 variants from same model to other humans)
+- Values: Average superrational score across all move order variants
+- Colormap: Viridis (0-1 scale) with numerical annotations
 
 ## Project Structure
 
@@ -119,9 +136,12 @@ src/
 ├── superrational_ai_agents/
 │   ├── eval.py         # Main evaluation runner
 │   ├── task.py         # Inspect AI task and scorer definitions
-│   └── games.py        # Game scenarios and variant definitions
+│   ├── games.py        # Game scenarios and variant definitions
+│   └── _registry.py    # Inspect AI task registry
 └── analysis/
-    └── analyze_logs.py # Log analysis and CSV generation
+    ├── analyze_logs.py # Log analysis and CSV generation
+    ├── plot_results.py # Grouped bar plot generation
+    └── plot_heatmap.py # Heatmap generation for model comparison
 ```
 
 ## Expected Superrational Answers
@@ -129,6 +149,8 @@ src/
 - **Prisoner's Dilemma variants**: Cooperate (C)
 - **Platonia Dilemma variants**: Randomized approach
 - **Wolf Dilemma variants**: Refrain
+
+See [here](https://gwern.net/doc/existential-risk/1985-hofstadter) for a discussion of the games.
 
 ## Scoring
 
@@ -139,3 +161,7 @@ src/
 ## License
 
 MIT
+
+## Further Directions
+
+Evaluate Grok 4. I tried using OpenRouter but it failed with `JSONDecodeError`.

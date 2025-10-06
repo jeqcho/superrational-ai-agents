@@ -98,6 +98,20 @@ The CSV output includes:
 
 Results are automatically sorted by game_key, player_variant, and move_order_variant.
 
+### Visualizing Results
+
+Generate grouped bar plots for each game:
+
+```bash
+# Generate plots from a log file
+uv run python src/analysis/plot_results.py logs/your_log_file.eval
+```
+
+Plots are saved to `plots/<log_filename>/` with one PNG file per game. Each plot shows:
+- X-axis: Player variant (instances of same model, similarly rational AI agents, similar AI agents)
+- Y-axis: Proportion of superrational answers
+- Grouped bars: Different move order variants (simultaneous, others first, you first)
+
 ## Project Structure
 
 ```

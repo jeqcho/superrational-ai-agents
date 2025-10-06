@@ -25,6 +25,8 @@ def create_grouped_bar_plot(
         PlayersVariant.SAME_MODEL.value,
         PlayersVariant.DIFF_MODEL_SIMILARLY_RATIONAL.value,
         PlayersVariant.DIFF_MODEL_OTHER_AGENTS.value,
+        PlayersVariant.OTHER_RATIONAL_HUMANS.value,
+        PlayersVariant.OTHER_HUMANS.value,
     ]
 
     move_order_variants = [
@@ -53,6 +55,8 @@ def create_grouped_bar_plot(
         "Instances of the same\nmodel as yourself",
         "Similarly rational\nAI agents like yourself",
         "Similar AI agents\nlike yourself",
+        "Other rational\nhumans",
+        "Other humans",
     ]
 
     move_order_labels = [
@@ -76,8 +80,19 @@ def create_grouped_bar_plot(
         multiplier += 1
 
     # Customize the plot
+    # Set y-axis label based on game type
+    ylabel_map = {
+        GameType.PRISONER_DILEMMA.value: "Superrational Score\n(Proportion Choosing Cooperate)",
+        GameType.N_PLAYER_PRISONER_DILEMMA.value: "Superrational Score\n(Proportion Choosing Cooperate)",
+        GameType.PLATONIA_DILEMMA.value: "Superrational Score\n(Proportion Using Randomization)",
+        GameType.PLATONIA_DILEMMA_WITH_PROVIDED_RANDOMNESS.value: "Superrational Score\n(Proportion Using Randomization)",
+        GameType.WOLF_DILEMMA.value: "Superrational Score\n(Proportion Choosing Refrain)",
+        GameType.MODIFIED_WOLF_DILEMMA.value: "Superrational Score\n(Proportion Choosing Refrain)",
+    }
+    ylabel = ylabel_map.get(game_key, "Proportion Superrational")
+
     ax.set_xlabel("Other players are said to be...", fontsize=12)
-    ax.set_ylabel("Proportion Superrational", fontsize=12)
+    ax.set_ylabel(ylabel, fontsize=12)
     ax.set_title(f"Superrationality Scores: {game_key.replace('_', ' ').title()}", fontsize=14)
     ax.set_xticks(x + width)
     ax.set_xticklabels(x_labels, fontsize=10)

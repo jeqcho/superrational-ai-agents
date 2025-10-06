@@ -72,7 +72,16 @@ def analyze_log_file(log_path: Path) -> list[dict[str, Any]]:
             score_value = superrational_score.value if superrational_score else None
 
             # Check if answer matches target (superrational answer)
-            is_superrational = answer == summary.target if summary.target else False
+            # For Platonia dilemma, the score is model-graded, so check score value
+            if game_key in (
+                GameType.PLATONIA_DILEMMA,
+                GameType.PLATONIA_DILEMMA_WITH_PROVIDED_RANDOMNESS,
+            ):
+                # For Platonia, score.value is 'C' (correct) or 'I' (incorrect)
+                is_superrational = score_value == "C"
+            else:
+                # For other games, check if answer matches target
+                is_superrational = answer == summary.target if summary.target else False
 
             # For Platonia dilemma, check if "SEND" is in the answer
             is_send = (

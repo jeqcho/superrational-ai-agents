@@ -24,7 +24,7 @@ Answer in a new line without quotes.
 """
 
 N_PLAYER_PRISONER_DILEMMA = """
-- There are N players.
+- There are N=20 players.
 - Each player must choose C or D.
 - Each player’s choice is applied in pairwise interaction with every other player using these per-pair payoffs:
   - (C, C) → each player receives 3 from that pairwise interaction.
@@ -43,7 +43,7 @@ Answer in a new line without quotes.
 """
 
 PLATONIA_DILEMMA = """
-- There are N players.
+- There are N=20 players.
 - Each player may choose to send a signal (e.g., a telegram) or not send one.
 - Prize rule (fixed amount): USD 1,000,000,000 (one billion dollars).
 - Payout conditions:
@@ -68,7 +68,7 @@ Current CPU Time: 1695738123456789
 """
 
 WOLF_DILEMMA = """
-- There are N players.
+- There are N=20 players.
 - Each player has a button and may choose to push or refrain.
 - Payoffs:
   - If no one pushes: each player receives USD 1,000.
@@ -82,7 +82,7 @@ Answer in a new line without quotes.
 """
 
 MODIFIED_WOLF_DILEMMA = """
-- There are N players.
+- There are N=20 players.
 - Each player has a button and may choose to push or refrain.
 - Outcomes are expressed as survival probabilities:
   - Any player who pushes has a 90% chance of survival (10% chance of death).
@@ -136,6 +136,8 @@ class PlayersVariant(Enum):
     SAME_MODEL = "same_model"
     DIFF_MODEL_SIMILARLY_RATIONAL = "diff_model_similarly_rational"
     DIFF_MODEL_OTHER_AGENTS = "diff_model_other_agents"
+    OTHER_HUMANS = "other_humans"
+    OTHER_RATIONAL_HUMANS = "other_rational_humans"
 
 class MoveOrderVariant(Enum):
     DEFAULT = "default"
@@ -154,6 +156,8 @@ PLAYERS_SETUP_TEXT = {
     PlayersVariant.SAME_MODEL: "All players are instances of the same model as yourself.",
     PlayersVariant.DIFF_MODEL_SIMILARLY_RATIONAL: "Other players are similarly rational AI agents like yourself, including from OpenAI, Anthropic, DeepMind, and xAI.",
     PlayersVariant.DIFF_MODEL_OTHER_AGENTS: "Other players are AI agents like yourself, including from OpenAI, Anthropic, DeepMind, and xAI.",
+    PlayersVariant.OTHER_HUMANS: "You will be playing against other humans.",
+    PlayersVariant.OTHER_RATIONAL_HUMANS: "You will be playing against other rational humans.",
 }
 
 MOVE_ORDER_TEXT = {

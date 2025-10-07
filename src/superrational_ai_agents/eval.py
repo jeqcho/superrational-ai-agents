@@ -26,4 +26,4 @@ models: list[Model] = [
 #     eval(tasks=play_game(model, num_epochs=10), max_connections=90)
 
 # debug first
-eval(tasks=play_game(get_model("openrouter/deepseek/deepseek-chat-v3-0324"), num_epochs=10), max_connections=90)
+eval(tasks=play_game(get_model("google/gemini-2.5-pro"), num_epochs=10), max_connections=200)

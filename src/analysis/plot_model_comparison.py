@@ -47,10 +47,10 @@ def create_model_comparison_plot(
         "gpt-5",
         "gpt-5-mini",
         "gpt-4o",
-        "claude-4.5",
-        "claude-3.7-sonnet",
         "gemini-2.5-pro",
         "gemini-2.5-flash-lite",
+        "claude-4.5",
+        "claude-3.7-sonnet",
     ]
 
     # Get all available models and order them

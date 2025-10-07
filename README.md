@@ -145,6 +145,62 @@ Plots are saved to the output directory with one PNG file per game. Each plot sh
 - Y-axis: Mean superrational score (averaged across move order variants)
 - One plot per game type
 
+#### Model Comparison Scatter Plots
+
+Generate scatter plots comparing models across player variants:
+
+```bash
+# Generate model comparison scatter plots from all logs in a directory
+uv run python src/analysis/plot_model_comparison_lines.py public_logs/
+uv run python src/analysis/plot_model_comparison_lines.py public_logs/ model_comparison_plots/
+```
+
+Plots are saved to the output directory with one PNG file per game. Each plot shows:
+- X-axis: Player variants (5 positions)
+- Points: Model scores at each player variant (colored by model)
+- Y-axis: Mean superrational score (averaged across move order variants)
+- One plot per game type
+
+#### Game Comparison Scatter Plots
+
+Generate side-by-side scatter/line plots comparing games from a single log file:
+
+```bash
+# Generate game comparison plot from a log file
+uv run python src/analysis/plot_games_comparison.py logs/model_name.eval
+
+# Exclude specific games
+uv run python src/analysis/plot_games_comparison.py logs/model_name.eval --exclude platonia_dilemma platonia_dilemma_with_provided_randomness
+
+# Custom output directory
+uv run python src/analysis/plot_games_comparison.py logs/model_name.eval -o custom_output/
+```
+
+Plots are saved to the output directory. Each plot shows two subplots:
+- **Left subplot**: Rational AI vs Rational Humans
+- **Right subplot**: AI vs Humans
+- Lines with markers: Different games (colored by game)
+- Y-axis: Mean superrational score (averaged across move order variants)
+- Use `--exclude` to filter out specific games by their game_key values
+
+#### Two Models Comparison
+
+Generate scatter/line plot comparing two models across all games:
+
+```bash
+# Compare two models
+uv run python src/analysis/plot_two_models_comparison.py logs/model1.eval logs/model2.eval
+
+# Custom output directory
+uv run python src/analysis/plot_two_models_comparison.py logs/model1.eval logs/model2.eval -o output_dir/
+```
+
+Plots are saved to the output directory. Each plot shows:
+- X-axis: Two positions (model 1 on left, model 2 on right)
+- Lines: Each game connects its scores across both models
+- Y-axis: Superrational score for "instances of same model" player variant
+- Data averaged across move order variants
+
 ## Project Structure
 
 ```
@@ -155,10 +211,13 @@ src/
 │   ├── games.py        # Game scenarios and variant definitions
 │   └── _registry.py    # Inspect AI task registry
 └── analysis/
-    ├── analyze_logs.py         # Log analysis and CSV generation
-    ├── plot_results.py         # Grouped bar plot generation
-    ├── plot_heatmap.py         # Heatmap generation for model comparison
-    └── plot_model_comparison.py # Model comparison bar charts
+    ├── analyze_logs.py                 # Log analysis and CSV generation
+    ├── plot_results.py                 # Grouped bar plot generation (move order variants)
+    ├── plot_heatmap.py                 # Heatmap generation for model comparison
+    ├── plot_model_comparison.py        # Model comparison bar charts
+    ├── plot_model_comparison_lines.py  # Model comparison scatter plots
+    ├── plot_games_comparison.py        # Game comparison scatter plots (single model)
+    └── plot_two_models_comparison.py   # Two models comparison across games
 ```
 
 ## Expected Superrational Answers
@@ -181,4 +240,4 @@ MIT
 
 ## Further Directions
 
-Evaluate Grok 4. I tried using OpenRouter but it failed with `JSONDecodeError`.
+Evaluate Grok 4 and Qwen 3 Max. I tried using OpenRouter but it failed with `JSONDecodeError`.

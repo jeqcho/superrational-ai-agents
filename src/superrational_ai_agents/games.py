@@ -154,10 +154,10 @@ Read the following game description. Make a single choice as specified. Submit y
 
 PLAYERS_SETUP_TEXT = {
     PlayersVariant.SAME_MODEL: "All players are instances of the same model as yourself.",
-    PlayersVariant.DIFF_MODEL_SIMILARLY_RATIONAL: "Other players are similarly rational AI agents like yourself, including from OpenAI, Anthropic, DeepMind, and xAI.",
-    PlayersVariant.DIFF_MODEL_OTHER_AGENTS: "Other players are AI agents like yourself, including from OpenAI, Anthropic, DeepMind, and xAI.",
+    PlayersVariant.DIFF_MODEL_SIMILARLY_RATIONAL: "You will be playing against other similarly rational AI agents, including from OpenAI, Anthropic, DeepMind, and xAI.",
+    PlayersVariant.DIFF_MODEL_OTHER_AGENTS: "You will be playing against other AI agents, including from OpenAI, Anthropic, DeepMind, and xAI.",
     PlayersVariant.OTHER_HUMANS: "You will be playing against other humans.",
-    PlayersVariant.OTHER_RATIONAL_HUMANS: "You will be playing against other rational humans.",
+    PlayersVariant.OTHER_RATIONAL_HUMANS: "You will be playing against other similarly rational humans.",
 }
 
 MOVE_ORDER_TEXT = {

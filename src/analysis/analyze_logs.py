@@ -13,10 +13,24 @@ def extract_variants_from_input(input_text: str) -> tuple[str, str]:
     """Extract player variant and move order variant from input text."""
     # Determine player variant
     player_variant = "unknown"
+
+    # Define old text variants for backward compatibility
+    OLD_PLAYERS_SETUP_TEXT = {
+        PlayersVariant.SAME_MODEL: "All players are instances of the same model as yourself.",
+        PlayersVariant.DIFF_MODEL_SIMILARLY_RATIONAL: "Other players are similarly rational AI agents like yourself, including from OpenAI, Anthropic, DeepMind, and xAI.",
+        PlayersVariant.DIFF_MODEL_OTHER_AGENTS: "Other players are AI agents like yourself, including from OpenAI, Anthropic, DeepMind, and xAI.",
+        PlayersVariant.OTHER_HUMANS: "You will be playing against other humans.",
+        PlayersVariant.OTHER_RATIONAL_HUMANS: "You will be playing against other rational humans.",
+    }
+
     for variant in PlayersVariant:
         from superrational_ai_agents.games import PLAYERS_SETUP_TEXT
 
+        # Check new text first, then old text
         if PLAYERS_SETUP_TEXT[variant] in input_text:
+            player_variant = variant.value
+            break
+        elif OLD_PLAYERS_SETUP_TEXT[variant] in input_text:
             player_variant = variant.value
             break
 

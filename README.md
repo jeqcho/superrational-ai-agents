@@ -234,6 +234,14 @@ See [here](https://gwern.net/doc/existential-risk/1985-hofstadter) for a discuss
 - **Platonia Dilemma**: Model-graded QA checking for randomization strategy
 - **Wolf Dilemma**: Word matching (PUSH or REFRAIN)
 
+## Logs
+
+You can view the eval logs by running
+
+```bash
+inspect view --log-dir=public_logs
+```
+
 ## License
 
 MIT

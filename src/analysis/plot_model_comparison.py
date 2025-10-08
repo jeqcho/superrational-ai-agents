@@ -35,10 +35,10 @@ def create_model_comparison_plot(
     ]
 
     player_variant_labels = [
-        "Instances of the same\nmodel as yourself",
+        "Same model\ninstances",
         "Similarly rational\nAI agents",
-        "Similar AI agents",
-        "Other rational\nhumans",
+        "Other AI agents",
+        "Similarly rational\nhumans",
         "Other humans",
     ]
 
@@ -110,16 +110,16 @@ def create_model_comparison_plot(
     }
     ylabel = ylabel_map.get(game_key, "Proportion Superrational")
 
-    ax.set_xlabel("Other players are said to be...", fontsize=12)
-    ax.set_ylabel(ylabel, fontsize=12)
+    ax.set_xlabel("Other players are said to be...", fontsize=16)
+    ax.set_ylabel(ylabel, fontsize=16)
     ax.set_title(
         f"Model Comparison: {game_key.replace('_', ' ').title()}",
-        fontsize=14,
+        fontsize=18,
         pad=20
     )
     ax.set_xticks(x)
-    ax.set_xticklabels(player_variant_labels, fontsize=10)
-    ax.legend(title="Model", loc="best", fontsize=9)
+    ax.set_xticklabels(player_variant_labels, fontsize=13)
+    ax.legend(title="Model", loc="best", fontsize=12, title_fontsize=13)
     ax.set_ylim(0, 1.0)
     ax.grid(axis="y", alpha=0.3)
 

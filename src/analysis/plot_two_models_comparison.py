@@ -94,12 +94,12 @@ def create_two_models_comparison_plot(
         ax.plot(x, values, marker='o', markersize=10, label=display_name, alpha=0.8, linewidth=2)
 
     # Customize the plot
-    ax.set_xlabel("Model", fontsize=12)
-    ax.set_ylabel("Superrational Score", fontsize=12)
-    ax.set_title("Model Comparison Across Games\n(Instances of Same Model)", fontsize=14, pad=20)
+    ax.set_xlabel("Model", fontsize=16)
+    ax.set_ylabel("Superrational Score", fontsize=16)
+    ax.set_title("Model Comparison Across Games\n(Instances of Same Model)", fontsize=18, pad=20)
     ax.set_xticks(x)
-    ax.set_xticklabels(x_labels, fontsize=11)
-    ax.legend(title="Game", loc="best", fontsize=9)
+    ax.set_xticklabels(x_labels, fontsize=13)
+    ax.legend(title="Game", loc="best", fontsize=12, title_fontsize=13)
     ax.set_ylim(0, 1.0)
     ax.grid(axis="y", alpha=0.3, zorder=1)
     ax.set_xlim(-0.2, 1.2)

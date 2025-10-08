@@ -25,8 +25,8 @@ def create_games_comparison_plot(
     ]
 
     left_labels = [
-        "Rational AI",
-        "Rational Humans",
+        "Similarly rational AI",
+        "Similarly rational humans",
     ]
 
     # Right plot: AI and humans
@@ -36,8 +36,8 @@ def create_games_comparison_plot(
     ]
 
     right_labels = [
-        "AI",
-        "Humans",
+        "Other AI agents",
+        "Other humans",
     ]
 
     # Define game ordering (all games)
@@ -99,12 +99,12 @@ def create_games_comparison_plot(
         display_name = game_display_names.get(game_key, game_key.replace("_", " ").title())
         ax_left.plot(x_left, values, marker='o', markersize=8, label=display_name, alpha=0.8, linewidth=2)
 
-    ax_left.set_xlabel("Other players are said to be...", fontsize=11)
-    ax_left.set_ylabel("Superrational Score", fontsize=11)
-    ax_left.set_title("Rational Agents Comparison", fontsize=13, pad=15)
+    ax_left.set_xlabel("Other players are said to be...", fontsize=16)
+    ax_left.set_ylabel("Superrational Score", fontsize=16)
+    ax_left.set_title("Rational Agents Comparison", fontsize=18, pad=15)
     ax_left.set_xticks(x_left)
-    ax_left.set_xticklabels(left_labels, fontsize=10)
-    ax_left.legend(title="Game", loc="best", fontsize=8)
+    ax_left.set_xticklabels(left_labels, fontsize=13)
+    ax_left.legend(title="Game", loc="best", fontsize=12, title_fontsize=13)
     ax_left.set_ylim(0, 1.0)
     ax_left.grid(axis="y", alpha=0.3, zorder=1)
 
@@ -115,12 +115,12 @@ def create_games_comparison_plot(
         display_name = game_display_names.get(game_key, game_key.replace("_", " ").title())
         ax_right.plot(x_right, values, marker='o', markersize=8, label=display_name, alpha=0.8, linewidth=2)
 
-    ax_right.set_xlabel("Other players are said to be...", fontsize=11)
-    ax_right.set_ylabel("Superrational Score", fontsize=11)
-    ax_right.set_title("General Agents Comparison", fontsize=13, pad=15)
+    ax_right.set_xlabel("Other players are said to be...", fontsize=16)
+    ax_right.set_ylabel("Superrational Score", fontsize=16)
+    ax_right.set_title("General Agents Comparison", fontsize=18, pad=15)
     ax_right.set_xticks(x_right)
-    ax_right.set_xticklabels(right_labels, fontsize=10)
-    ax_right.legend(title="Game", loc="best", fontsize=8)
+    ax_right.set_xticklabels(right_labels, fontsize=13)
+    ax_right.legend(title="Game", loc="best", fontsize=12, title_fontsize=13)
     ax_right.set_ylim(0, 1.0)
     ax_right.grid(axis="y", alpha=0.3, zorder=1)
 

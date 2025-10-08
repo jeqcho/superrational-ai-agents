@@ -52,10 +52,10 @@ def create_grouped_bar_plot(
 
     # Prepare data for plotting
     x_labels = [
-        "Instances of the same\nmodel as yourself",
+        "Same model\ninstances",
         "Similarly rational\nAI agents",
-        "Similar AI agents",
-        "Other rational\nhumans",
+        "Other AI agents",
+        "Similarly rational\nhumans",
         "Other humans",
     ]
 
@@ -91,12 +91,12 @@ def create_grouped_bar_plot(
     }
     ylabel = ylabel_map.get(game_key, "Proportion Superrational")
 
-    ax.set_xlabel("Other players are said to be...", fontsize=12)
-    ax.set_ylabel(ylabel, fontsize=12)
-    ax.set_title(f"Superrationality Scores: {game_key.replace('_', ' ').title()}", fontsize=14)
+    ax.set_xlabel("Other players are said to be...", fontsize=16)
+    ax.set_ylabel(ylabel, fontsize=16)
+    ax.set_title(f"Superrationality Scores: {game_key.replace('_', ' ').title()}", fontsize=18)
     ax.set_xticks(x + width)
-    ax.set_xticklabels(x_labels, fontsize=10)
-    ax.legend(title="Move Order", loc="best")
+    ax.set_xticklabels(x_labels, fontsize=13)
+    ax.legend(title="Move Order", loc="best", fontsize=12, title_fontsize=13)
     ax.set_ylim(0, 1.0)
     ax.grid(axis="y", alpha=0.3)
 

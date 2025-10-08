@@ -36,10 +36,10 @@ def create_heatmap_for_game(
     ]
 
     player_variant_labels = [
-        "Instances of the same\nmodel as yourself",
+        "Same model\ninstances",
         "Similarly rational\nAI agents",
-        "Similar AI agents",
-        "Other rational\nhumans",
+        "Other AI agents",
+        "Similarly rational\nhumans",
         "Other humans",
     ]
 
@@ -104,23 +104,23 @@ def create_heatmap_for_game(
         cmap='viridis',
         vmin=0,
         vmax=1,
-        cbar_kws={'label': 'Proportion Superrational'},
+        cbar_kws={'label': 'Proportion Superrational', 'label_fontsize': 14},
         xticklabels=player_variant_labels,
         yticklabels=models,
         ax=ax,
     )
 
-    ax.set_xlabel("Other players are said to be...", fontsize=12)
-    ax.set_ylabel("Model", fontsize=12)
+    ax.set_xlabel("Other players are said to be...", fontsize=16)
+    ax.set_ylabel("Model", fontsize=16)
     ax.set_title(
         f"Superrationality Heatmap: {game_key.replace('_', ' ').title()}",
-        fontsize=14,
+        fontsize=18,
         pad=20
     )
 
     # Rotate x-axis labels for better readability
-    plt.setp(ax.get_xticklabels(), rotation=0, ha='center', fontsize=9)
-    plt.setp(ax.get_yticklabels(), rotation=0, fontsize=9)
+    plt.setp(ax.get_xticklabels(), rotation=0, ha='center', fontsize=13)
+    plt.setp(ax.get_yticklabels(), rotation=0, fontsize=13)
 
     plt.tight_layout()
     plt.savefig(output_path, dpi=300, bbox_inches='tight')
